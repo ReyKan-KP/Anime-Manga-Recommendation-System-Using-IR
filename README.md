@@ -1,7 +1,7 @@
-# Anime Recommendation System
+# Anime/Manga Recommendation System
 
 ## Description
-This is an information retrieval system for book recommendations. It allows both new and existing users to enter book information and preferences, and get recommendations based on book descriptions, ratings, and user interactions. The system utilizes an Information Retrieval (IR) similarity algorithm to match user preferences to Anime/Manga in the dataset.
+This is an information retrieval system for Anime/Manga recommendations. It allows both new and existing users to enter Anime/Manga information and preferences, and get recommendations based on anime/manga descriptions, ratings, and user interactions. The system utilizes an Information Retrieval (IR) similarity algorithm to match user preferences to Anime/Manga in the dataset.
 
 ## Getting Started
 Before you start using the system, make sure you have the necessary libraries installed. You can install them using pip:
