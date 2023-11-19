@@ -1,0 +1,67 @@
+{
+  "fields": [
+    {
+      "name": "ID",
+      "type": "integer",
+      "format": "default"
+    },
+    {
+      "name": "Title",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "genre",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "aired",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "episodes",
+      "type": "integer",
+      "format": "default"
+    },
+    {
+      "name": "members",
+      "type": "integer",
+      "format": "default"
+    },
+    {
+      "name": "popularity",
+      "type": "integer",
+      "format": "default"
+    },
+    {
+      "name": "ranked",
+      "type": "integer",
+      "format": "default"
+    },
+    {
+      "name": "score",
+      "type": "number",
+      "format": "default"
+    },
+    {
+      "name": "img_url",
+      "type": "string",
+      "format": "uri"
+    },
+    {
+      "name": "link",
+      "type": "string",
+      "format": "uri"
+    }
+  ],
+  "missingValues": [
+    ""
+  ]
+}
