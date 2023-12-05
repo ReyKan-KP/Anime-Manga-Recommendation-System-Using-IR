@@ -16,49 +16,24 @@
       "format": "default"
     },
     {
-      "name": "genre",
-      "type": "string",
-      "format": "default"
-    },
-    {
-      "name": "aired",
-      "type": "string",
-      "format": "default"
-    },
-    {
-      "name": "episodes",
-      "type": "integer",
-      "format": "default"
-    },
-    {
-      "name": "members",
-      "type": "integer",
-      "format": "default"
-    },
-    {
-      "name": "popularity",
-      "type": "integer",
-      "format": "default"
-    },
-    {
-      "name": "ranked",
-      "type": "integer",
-      "format": "default"
-    },
-    {
-      "name": "score",
+      "name": "Rating",
       "type": "number",
       "format": "default"
     },
     {
-      "name": "img_url",
-      "type": "string",
-      "format": "uri"
+      "name": "Feedback",
+      "type": "integer",
+      "format": "default"
     },
     {
-      "name": "link",
-      "type": "string",
-      "format": "uri"
+      "name": "Evaluation",
+      "type": "number",
+      "format": "default"
+    },
+    {
+      "name": "Normalized Evaluation",
+      "type": "yearmonth",
+      "format": "default"
     }
   ],
   "missingValues": [

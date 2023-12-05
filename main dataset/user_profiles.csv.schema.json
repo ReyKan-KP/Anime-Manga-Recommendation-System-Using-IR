@@ -1,0 +1,22 @@
+{
+  "fields": [
+    {
+      "name": "User ID",
+      "type": "integer",
+      "format": "default"
+    },
+    {
+      "name": "profile",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "watch or read",
+      "type": "string",
+      "format": "default"
+    }
+  ],
+  "missingValues": [
+    ""
+  ]
+}
