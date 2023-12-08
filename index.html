@@ -1,0 +1,183 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anime/Manga Recommendation System</title>
+  <style>
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <form id="userInputForm" method="POST">
+
+    <div id="askingUser">
+      <label for="askUser">Are you an existing User?</label>
+      <select id="askUserSelect" name="askUser" onchange="handleUserSelection()">
+        <option value="">Select</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select><br>
+    </div>
+
+    <div id="UserId" class="hidden">
+      <label for="userID">Enter User ID :</label>
+      <input type="text" id="userID" name="userID" onblur="handleUserIdInput()" onkeydown="handleEnter(event)">
+    </div>
+
+    <div id="descRecommendDropDown" class="hidden">
+      <label for="descRecommendDropDown">Choose an option:</label>
+      <select id="descRecommendDropDownSelect" name="descRecommendDropDown" onchange="handleDropDownSelection()">
+        <option value="">Select</option>
+        <option value="enterDescription">Enter Description of the anime/manga</option>
+        <option value="getRecommendations">Get recommendations based on the previous User's watched list</option>
+      </select>
+    </div>
+
+    <div id="desc" class="hidden">
+      <label for="description">Enter Description of the Anime/Manga:</label>
+      <input type="text" id="description" name="description" onkeydown="handleEnter(event)">
+    </div>
+
+    <button type="submit" onclick="storeUserInput(event)">Submit</button>
+  </form>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    var userInput = {
+      isExistingUser: "",
+      userID: "",
+      selectedOption: "",
+      query: ""
+    };
+
+    function showElement(elementId) {
+      document.getElementById(elementId).classList.remove("hidden");
+    }
+
+    function hideElement(elementId) {
+      document.getElementById(elementId).classList.add("hidden");
+    }
+
+    function handleUserSelection() {
+      var askUserSelect = document.getElementById("askUserSelect");
+      hideElement("UserId");
+      hideElement("descRecommendDropDown");
+      hideElement("desc");
+
+      if (askUserSelect.value === "yes") {
+        showElement("UserId");
+        userInput["isExistingUser"] = "yes";
+      } else if (askUserSelect.value === "no") {
+        hideElement("descRecommendDropDown");
+        showElement("desc");
+        userInput["isExistingUser"] = "no";
+        userInput["userID"] = 1;
+      }
+    }
+
+    function handleUserIdInput() {
+      var userID = document.getElementById("userID").value;
+      var descRecommendDiv = document.getElementById("descRecommendDropDown");
+
+      showElement("descRecommendDropDown");
+      userInput["userID"] = userID;
+    }
+
+    function handleDropDownSelection() {
+      var descRecommendDropDownSelect = document.getElementById("descRecommendDropDownSelect");
+      var descDiv = document.getElementById("desc");
+
+      hideElement("desc");
+
+      if (descRecommendDropDownSelect.value === "enterDescription") {
+        showElement("desc");
+        userInput["selectedOption"] = descRecommendDropDownSelect.value;
+      } else if (descRecommendDropDownSelect.value === "getRecommendations") {
+        userInput["selectedOption"] = descRecommendDropDownSelect.value;
+      }
+    }
+
+    function handleEnter(event) {
+      if (event.key === "Enter") {
+        if (!document.getElementById("UserId").classList.contains("hidden")) {
+          handleUserIdInput();
+        } else if (!document.getElementById("desc").classList.contains("hidden")) {}
+      }
+    }
+
+    function storeUserInput(event) {
+      console.log(userInput)
+    }
+
+    function displayResults(results) {
+      var resultContainer = document.getElementById('result-container');
+      resultContainer.innerHTML = ''; // Clear previous results
+
+      if (results.length === 0) {
+        resultContainer.innerHTML = '<p>No results found.</p>';
+        return;
+      }
+
+      var table = document.createElement('table');
+      table.setAttribute('border', '1');
+      table.setAttribute('cellpadding', '5');
+
+      // Create table header
+      var headerRow = table.insertRow(0);
+      for (var key in results[0]) {
+        var headerCell = headerRow.insertCell(-1);
+        headerCell.innerHTML = key;
+      }
+
+      // Create table rows and cells
+      for (var i = 0; i
+
+        <
+        results.length; i++) {
+        var row = table.insertRow(-1);
+        for (var key in results[i]) {
+          var cell = row.insertCell(-1);
+          cell.innerHTML = results[i][key];
+        }
+      }
+      resultContainer.appendChild(table);
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('userInputForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+
+
+        axios.post('http://127.0.0.1:5000/process_user_input', userInput)
+          .then(function(response) {
+            console.log(response.data);
+
+            // Dynamically generate a table for the results
+            displayResults(response.data.result);
+          })
+          .catch(function(error) {
+             if (error.response) {
+             // The request was made, but the server responded with a status code outside the 2xx range
+             console.error('Server Error:', error.response.data);
+             } else if (error.request) {
+             // The request was made, but no response was received
+             console.error('No response from server');
+             } else {
+             // Something happened in setting up the request that triggered an Error
+             console.error('Error:', error.message);
+             }
+          });
+      });
+
+
+    });
+  </script>
+</body>
+
+</html>
