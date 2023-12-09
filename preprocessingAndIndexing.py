@@ -420,6 +420,20 @@ def makeIndex():
 
 total_doc = 0
 indexmap = 0
+NormalizedEvalMap=[]
+
+import pandas as pd
+
+
+def getNormalizedEvaluation(csv_file):
+    df = pd.read_csv(csv_file)
+    NormalizedEval = dict(zip(df['ID'], df['Normalized Evaluation']))
+    return NormalizedEval
+
+NormalizedEvalMap = getNormalizedEvaluation('main dataset//main.csv')
+# Now you can access values using NormalizedEvalMap[1]
+# print(NormalizedEvalMap)
+
 
 
 def makeindexmap():
@@ -445,6 +459,7 @@ def makeindexmap():
                     print(f"Error parsing pair: {pair}")
     # print(total_doc)
     return term_doc_freq_map
+
 
 
 indexmap = makeindexmap()
