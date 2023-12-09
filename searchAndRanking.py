@@ -188,7 +188,8 @@ def searchAndRank(query, userID, pageNo):
     csv_file_path_main = 'main dataset//main.csv'
     doc_info_dict = get_document_info(csv_file_path_main, top_10)
 
-    results_table = "<table border='1'><tr><th>Ranking</th><th>ID</th><th>Name</th><th>Combined Similarity Score(similarity+normalized evaluation)</th><th>Description</th></tr>"
+    results_table = "<table border='1'><tr><th>Ranking</th><th>ID</th><th>Name</th><th>Combined Similarity Score(similarity+normalized evaluation)</th><th>Description</th></tr>Total time for Searching is : <span class=green> "+str(
+        end_time - start_time)+" sec</span"
 
     for rank, (doc_id, similarity_score) in enumerate(top_10.items(), start=start_index + 1):
         doc_info = doc_info_dict.get(
