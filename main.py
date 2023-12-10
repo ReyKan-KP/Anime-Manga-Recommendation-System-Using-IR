@@ -2,7 +2,7 @@ from flask_cors import CORS
 from flask import Flask, render_template, request, jsonify, render_template_string
 from searchAndRanking import *
 import enchant
-import webbrowser
+# import webbrowser
 from feedback import *
 
 # main.py
@@ -34,11 +34,11 @@ def correct_spelling(text):
 app = Flask(__name__)
 CORS(app)
 
-browser_opened = False
+# browser_opened = False
 
-if not browser_opened:
-    webbrowser.open_new_tab('http://127.0.0.1:5500/index.html')
-    browser_opened = True
+# if not browser_opened:
+#     webbrowser.open_new_tab('http://127.0.0.1:5500/index.html')
+#     browser_opened = True
 
 @app.route('/')
 def index():
@@ -93,7 +93,7 @@ def process_feedback_input():
 
     feedback(feedback_ids)
 
-    return 1
+    return jsonify(success=True, message="<h2>Feedback processed successfully")
 
 
 if __name__ == '__main__':
