@@ -22,22 +22,6 @@ def correct_spelling(text):
         print("Did you mean: " + corrected_text + "?")
     return corrected_text
 
-# def correct_spelling(text):
-#     english_dict = enchant.Dict("en_US")
-
-#     words = text.split()
-
-#     corrected_words = [
-#         english_dict.suggest(word)[0] if english_dict.suggest(word) else word
-#         for word in words
-#     ]
-
-#     corrected_text = ' '.join(corrected_words)
-#     if corrected_text != text:
-#         print("Did you mean: " + corrected_text + "?")
-#     return corrected_text
-
-
 
 # userId = 4
 # query = ""
@@ -111,10 +95,6 @@ def process_feedback_input():
     feedback_ids = [int(fid) for fid in feedback_ids]
 
     feedback(feedback_ids)
-    # print("FeedBack from here")
-    # print(total_doc)
-    # print(feedback_ids)
-    # print(top_10)
     PRcurve(total_doc,feedback_ids,top_10)
 
     return jsonify(success=True, message="<h2>Feedback processed successfully")

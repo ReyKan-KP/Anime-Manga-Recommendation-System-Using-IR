@@ -1,42 +1,20 @@
-#PRcurve.py
+# PRcurve.py
 import matplotlib.pyplot as plt
 
-def PRcurve(total_docs,relevant_docs_id,top_10):
-    
+
+def PRcurve(total_docs, relevant_docs_id, top_10):
+
     relevant_docs = len(relevant_docs_id)
     # total_docs = 100
     print("PR curve Starts from here")
     print(total_docs)
     print(relevant_docs_id)
-    ranked_list=[]
+    ranked_list = []
     for doc_id in top_10:
         if doc_id in relevant_docs_id:
             ranked_list.append({"DocID": doc_id, "Relevance": 1})
         else:
             ranked_list.append({"DocID": doc_id, "Relevance": 0})
-    
-    # ranked_list = [
-    #     {"DocID": "d545", "Relevance": 1},
-    #     {"DocID": "d992", "Relevance": 0},
-    #     {"DocID": "d450", "Relevance": 1},
-    #     {"DocID": "d883", "Relevance": 1},
-    #     {"DocID": "d374", "Relevance": 0},
-    #     {"DocID": "d343", "Relevance": 0},
-    #     {"DocID": "d584", "Relevance": 1},
-    #     {"DocID": "d443", "Relevance": 1},
-    #     {"DocID": "d786", "Relevance": 1},
-    #     {"DocID": "d865", "Relevance": 1},
-    #     {"DocID": "d486", "Relevance": 0},
-    #     {"DocID": "d166", "Relevance": 1},
-    #     {"DocID": "d136", "Relevance": 0},
-    #     {"DocID": "d190", "Relevance": 0},
-    #     {"DocID": "d581", "Relevance": 0},
-    #     {"DocID": "d960", "Relevance": 1},
-    #     {"DocID": "d649", "Relevance": 1},
-    #     {"DocID": "d261", "Relevance": 1},
-    #     {"DocID": "d560", "Relevance": 1},
-    #     {"DocID": "d321", "Relevance": 0},
-    # ]
 
     precision_values = []
     recall_values = []
@@ -65,19 +43,17 @@ def PRcurve(total_docs,relevant_docs_id,top_10):
                 max_precision = max(max_precision, precision_val)
         interpolated_precision.append(max_precision)
 
-
     for i in range(len(precision_values)):
         print(i, ":", round(precision_values[i], 3),
-            "->", round(recall_values[i], 3))
-
+              "->", round(recall_values[i], 3))
 
     print("Interpolated Precision: ", interpolated_precision)
     print("Recall Levels: ", recall_levels)
 
     plt.plot(recall_values, precision_values,
-            marker='.', label='Precision-Recall Curve')
+             marker='.', label='Precision-Recall Curve')
     plt.plot(recall_levels, interpolated_precision, marker='o',
-            linestyle='-', label='11-point Interpolation')
+             linestyle='-', label='11-point Interpolation')
     plt.xlabel('Recall')
     plt.ylabel('Precision')
     plt.title('Precision-Recall Curve with 11-point Interpolation')
@@ -86,8 +62,6 @@ def PRcurve(total_docs,relevant_docs_id,top_10):
 
     plt.xticks(recall_levels)
     plt.yticks([0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0])
-    print("Total Docs")
-    print(total_docs)
-
-    print(relevant_docs)
+    print("Total Docs :" + str(total_docs))
+    print("Relevant Docs :" + str(relevant_docs))
     plt.show()
