@@ -34,7 +34,12 @@ def correct_spelling(text):
 app = Flask(__name__)
 CORS(app)
 
-webbrowser.open_new_tab('http://127.0.0.1:5500/index.html')
+browser_opened = False
+
+if not browser_opened:
+    webbrowser.open_new_tab('http://127.0.0.1:5500/index.html')
+    browser_opened = True
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -57,7 +62,6 @@ def process_user_input():
         pageNo = int(pageNo)
     correctedQuery = correct_spelling(query)
 
-    # return render_template_string('<h1>Results</h1><div id="result-container">{{ result | safe }}</div>', result=search_results_table)
     did_you_mean = ""
     if correctedQuery != query:
         did_you_mean = "Did you mean " + '<span class = green>' + correctedQuery + "</span>?" + \
