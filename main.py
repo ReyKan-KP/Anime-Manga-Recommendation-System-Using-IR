@@ -4,6 +4,7 @@ from searchAndRanking import *
 import enchant
 # import webbrowser
 from feedback import *
+from PRcurve import *
 
 # main.py
 
@@ -20,6 +21,22 @@ def correct_spelling(text):
     if corrected_text != text:
         print("Did you mean: " + corrected_text + "?")
     return corrected_text
+
+# def correct_spelling(text):
+#     english_dict = enchant.Dict("en_US")
+
+#     words = text.split()
+
+#     corrected_words = [
+#         english_dict.suggest(word)[0] if english_dict.suggest(word) else word
+#         for word in words
+#     ]
+
+#     corrected_text = ' '.join(corrected_words)
+#     if corrected_text != text:
+#         print("Did you mean: " + corrected_text + "?")
+#     return corrected_text
+
 
 
 # userId = 4
@@ -44,9 +61,11 @@ CORS(app)
 def index():
     return render_template('index.html')
 
+top_10=[]
 
 @app.route('/process_user_input', methods=['POST'])
 def process_user_input():
+    global top_10
     is_existing_user = request.json['isExistingUser']
     userID = request.json['userID']
     query = request.json['query']
@@ -67,9 +86,9 @@ def process_user_input():
         did_you_mean = "Did you mean " + '<span class = green>' + correctedQuery + "</span>?" + \
             '<br>'+'showing results for <span class = green>' + \
             correctedQuery+'</span> instead of <span class = red>'+query+'</span>'
-        search_results_table = searchAndRank(correctedQuery, userID, pageNo)
+        search_results_table, top_10 = searchAndRank(correctedQuery, userID, pageNo)
     else:
-        search_results_table = searchAndRank(query, userID, pageNo)
+        search_results_table, top_10 = searchAndRank(query, userID, pageNo)
 
     return render_template_string(
         '''
@@ -92,6 +111,11 @@ def process_feedback_input():
     feedback_ids = [int(fid) for fid in feedback_ids]
 
     feedback(feedback_ids)
+    # print("FeedBack from here")
+    # print(total_doc)
+    # print(feedback_ids)
+    # print(top_10)
+    PRcurve(total_doc,feedback_ids,top_10)
 
     return jsonify(success=True, message="<h2>Feedback processed successfully")
 

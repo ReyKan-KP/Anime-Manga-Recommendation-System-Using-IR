@@ -208,4 +208,4 @@ def searchAndRank(query, userID, pageNo):
 
     print(f"Total time for Searching is {end_time - start_time}")
 
-    return results_table
+    return results_table , top_10
