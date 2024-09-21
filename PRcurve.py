@@ -1,14 +1,11 @@
-# PRcurve.py
-import matplotlib.pyplot as plt
-
+import plotly.graph_objects as go
 
 def PRcurve(total_docs, relevant_docs_id, top_10):
-
     relevant_docs = len(relevant_docs_id)
-    # total_docs = 100
     print("PR curve Starts from here")
     print(total_docs)
     print(relevant_docs_id)
+
     ranked_list = []
     for doc_id in top_10:
         if doc_id in relevant_docs_id:
@@ -18,7 +15,7 @@ def PRcurve(total_docs, relevant_docs_id, top_10):
 
     precision_values = []
     recall_values = []
-
+    
     relevant_in_top_n = 0
     retrieved_relevant = 0
 
@@ -44,24 +41,35 @@ def PRcurve(total_docs, relevant_docs_id, top_10):
         interpolated_precision.append(max_precision)
 
     for i in range(len(precision_values)):
-        print(i, ":", round(precision_values[i], 3),
-              "->", round(recall_values[i], 3))
+        print(i, ":", round(precision_values[i], 3), "->", round(recall_values[i], 3))
 
     print("Interpolated Precision: ", interpolated_precision)
     print("Recall Levels: ", recall_levels)
 
-    plt.plot(recall_values, precision_values,
-             marker='.', label='Precision-Recall Curve')
-    plt.plot(recall_levels, interpolated_precision, marker='o',
-             linestyle='-', label='11-point Interpolation')
-    plt.xlabel('Recall')
-    plt.ylabel('Precision')
-    plt.title('Precision-Recall Curve with 11-point Interpolation')
-    plt.legend()
-    plt.grid(True)
+    # Plotting with Plotly
+    fig = go.Figure()
 
-    plt.xticks(recall_levels)
-    plt.yticks([0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0])
+    # Precision-Recall Curve
+    fig.add_trace(go.Scatter(x=recall_values, y=precision_values,
+                             mode='markers+lines', name='Precision-Recall Curve',
+                             marker=dict(size=8)))
+
+    # 11-point Interpolation
+    fig.add_trace(go.Scatter(x=recall_levels, y=interpolated_precision,
+                             mode='lines+markers', name='11-point Interpolation'))
+
+    # Update layout
+    fig.update_layout(
+        title='Precision-Recall Curve with 11-point Interpolation',
+        xaxis_title='Recall',
+        yaxis_title='Precision',
+        xaxis=dict(tickvals=recall_levels),
+        yaxis=dict(tickvals=[0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]),
+        showlegend=True
+    )
+
+    # Show the figure
+    fig.show()
+
     print("Total Docs :" + str(total_docs))
     print("Relevant Docs :" + str(relevant_docs))
-    plt.show()
