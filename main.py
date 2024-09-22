@@ -53,11 +53,14 @@ def process_user_input():
     userID = request.json['userID']
     query = request.json['query']
     pageNo = request.json['pageNo']
+    rec=request.json['descRecommendDropDown']
+
 
     print("isExistingUser:", is_existing_user)
     print("userID:", userID)
     print("query:", query)
     print("pageNo:", pageNo)
+    print("recomendation:", rec)
 
     if userID == "":
         userID = 1
@@ -68,11 +71,6 @@ def process_user_input():
     else:
         pageNo = int(pageNo)
 
-    print("isExistingUser:", is_existing_user)
-    print("userID:", userID)
-    print("query:", query)
-    print("pageNo:", pageNo)
-
     
     correctedQuery = correct_spelling(query)
 
@@ -81,9 +79,9 @@ def process_user_input():
         did_you_mean = "Did you mean " + '<span class = green>' + correctedQuery + "</span>?" + \
             '<br>'+'showing results for <span class = green>' + \
             correctedQuery+'</span> instead of <span class = red>'+query+'</span>'
-        search_results_table, top_10 = searchAndRank(correctedQuery, userID, pageNo)
+        search_results_table, top_10 = searchAndRank(correctedQuery, userID, pageNo, rec)
     else:
-        search_results_table, top_10 = searchAndRank(query, userID, pageNo)
+        search_results_table, top_10 = searchAndRank(query, userID, pageNo, rec)
 
     return render_template_string(
         '''
