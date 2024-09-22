@@ -452,6 +452,7 @@
       userID: document.getElementById("userID").value,
       query: document.getElementById("description").value,
       pageNo: document.getElementById("pageNo").value,
+      descRecommendDropDown: document.getElementById("descRecommendDropDownSelect").value
     };
     console.log(userInput1);
 
@@ -468,6 +469,10 @@
         console.error("Error:", error);
         hideLoadingIcon();
       });
+      document.getElementById("userID").value=''
+      document.getElementById("description").value=''
+      document.getElementById("descRecommendDropDownSelect").value=''
+
   });
 </script>
 
