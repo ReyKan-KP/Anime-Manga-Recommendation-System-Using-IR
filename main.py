@@ -1,25 +1,22 @@
 from flask_cors import CORS
 from flask import Flask, render_template, request, jsonify, render_template_string
 from searchAndRanking import *
-import enchant
+# import enchant
 # import webbrowser
 from feedback import *
 from PRcurve import *
 
 # main.py
 
+from textblob import TextBlob
 
 def correct_spelling(text):
-    english_dict = enchant.Dict("en_US")
-
-    words = text.split()
-
-    corrected_words = [english_dict.suggest(
-        word)[0] if not english_dict.check(word) else word for word in words]
-
-    corrected_text = ' '.join(corrected_words)
+    blob = TextBlob(text)
+    corrected_text = str(blob.correct())
+    
     if corrected_text != text:
         print("Did you mean: " + corrected_text + "?")
+    
     return corrected_text
 
 
