@@ -8,16 +8,16 @@ from PRcurve import *
 
 # main.py
 
-from textblob import TextBlob
+# from textblob import TextBlob
 
-def correct_spelling(text):
-    blob = TextBlob(text)
-    corrected_text = str(blob.correct())
+# def correct_spelling(text):
+#     blob = TextBlob(text)
+#     corrected_text = str(blob.correct())
     
-    if corrected_text != text:
-        print("Did you mean: " + corrected_text + "?")
+#     if corrected_text != text:
+#         print("Did you mean: " + corrected_text + "?")
     
-    return corrected_text
+#     return corrected_text
 
 
 # userId = 4
@@ -72,13 +72,13 @@ def process_user_input():
     correctedQuery = correct_spelling(query)
 
     did_you_mean = ""
-    if correctedQuery != query:
-        did_you_mean = "Did you mean " + '<span class = green>' + correctedQuery + "</span>?" + \
-            '<br>'+'showing results for <span class = green>' + \
-            correctedQuery+'</span> instead of <span class = red>'+query+'</span>'
-        search_results_table, top_10 = searchAndRank(correctedQuery, userID, pageNo)
-    else:
-        search_results_table, top_10 = searchAndRank(query, userID, pageNo)
+    # if correctedQuery != query:
+    #     did_you_mean = "Did you mean " + '<span class = green>' + correctedQuery + "</span>?" + \
+    #         '<br>'+'showing results for <span class = green>' + \
+    #         correctedQuery+'</span> instead of <span class = red>'+query+'</span>'
+    #     search_results_table, top_10 = searchAndRank(correctedQuery, userID, pageNo)
+    # else:
+    search_results_table, top_10 = searchAndRank(query, userID, pageNo)
 
     return render_template_string(
         '''
