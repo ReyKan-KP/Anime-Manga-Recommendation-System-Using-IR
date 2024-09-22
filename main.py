@@ -100,5 +100,5 @@ def process_feedback_input():
     return jsonify(success=True, message="<h2>Feedback processed successfully")
 
 
-# if __name__ == '__main__':
-#     app.run(debug=False,host='0.0.0.0')
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
