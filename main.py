@@ -68,6 +68,11 @@ def process_user_input():
     else:
         pageNo = int(pageNo)
 
+    print("isExistingUser:", is_existing_user)
+    print("userID:", userID)
+    print("query:", query)
+    print("pageNo:", pageNo)
+
     
     correctedQuery = correct_spelling(query)
 
