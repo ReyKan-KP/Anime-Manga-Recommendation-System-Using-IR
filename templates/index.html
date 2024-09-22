@@ -446,11 +446,14 @@
   <script>
   document.getElementById("userInputForm").addEventListener("submit", function(event) {
     event.preventDefault();
-
+    var query=document.getElementById("description").value
+    if(query==''){
+      query='$$'
+    }
     var userInput1 = {
       isExistingUser: document.getElementById("askUserSelect").value,
       userID: document.getElementById("userID").value,
-      query: document.getElementById("description").value,
+      query: query,
       pageNo: document.getElementById("pageNo").value,
       descRecommendDropDown: document.getElementById("descRecommendDropDownSelect").value
     };
