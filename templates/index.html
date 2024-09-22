@@ -412,7 +412,7 @@
       showElement("feedbackInfo");
     }
   </script>
-  <script>
+<!--   <script>
     document
       .getElementById("userInputForm")
       .addEventListener("submit", function(event) {
@@ -440,7 +440,35 @@
             hideLoadingIcon();
           });
       });
-  </script>
+  </script> -->
+  <script>
+  document.getElementById("userInputForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    var userInput1 = {
+      isExistingUser: document.getElementById("askUserSelect").value,
+      userID: document.getElementById("userID").value,
+      query: document.getElementById("description").value,
+      pageNo: document.getElementById("pageNo").value,
+    };
+    console.log(userInput1);
+
+    showLoadingIcon();
+
+    axios
+      .post("https://recommendationsystem-production.up.railway.app/process_user_input", userInput1)  // Removed extra space
+      .then(function(response) {
+        console.log(response.data);
+        document.getElementById("result-container").innerHTML = response.data;  // Check the structure of the data being returned
+        hideLoadingIcon();
+      })
+      .catch(function(error) {
+        console.error("Error:", error);
+        hideLoadingIcon();
+      });
+  });
+</script>
+
   <script>
     function storeFeedbackInput(event) {
       event.preventDefault(); // Prevent the default form submission behavior
