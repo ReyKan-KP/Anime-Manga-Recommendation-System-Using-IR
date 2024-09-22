@@ -427,7 +427,7 @@
         console.log(userInput1);
 
         axios
-          .post(" http://127.0.0.1:5000/process_user_input", userInput1)
+          .post(" https://recommendationsystem-production.up.railway.app/process_user_input", userInput1)
           .then(function(response) {
             console.log(response.data);
             document.getElementById("result-container").innerHTML =
