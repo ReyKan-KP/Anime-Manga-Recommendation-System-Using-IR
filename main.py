@@ -61,7 +61,8 @@ def process_user_input():
     print("query:", query)
     print("pageNo:", pageNo)
     print("recomendation:", rec)
-
+    if query=='$$':
+        query=''
     if userID == "":
         userID = 1
     else:
