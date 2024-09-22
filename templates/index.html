@@ -482,7 +482,7 @@
       console.log(userFeedback);
 
       axios
-        .post(" http://127.0.0.1:5000/process_feedback_input", userFeedback, {
+        .post("https://recommendationsystem-production.up.railway.app/process_feedback_input", userFeedback, {
           timeout: 20000,
         })
         .then(function(response) {
