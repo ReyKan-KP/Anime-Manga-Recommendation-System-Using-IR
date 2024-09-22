@@ -377,8 +377,8 @@ def stemming(all_words):
 
 inverted_index = defaultdict(dict)
 
-data = pd.read_csv('main dataset\\main.csv')
-userData = pd.read_csv('main dataset\\user_profiles.csv')
+data = pd.read_csv('main dataset/main.csv')
+userData = pd.read_csv('main dataset/user_profiles.csv')
 
 
 def count_string_occurrences(string, array_of_strings):
