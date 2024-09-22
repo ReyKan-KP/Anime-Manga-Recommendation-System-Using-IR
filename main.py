@@ -34,6 +34,7 @@ def correct_spelling(text):
 
 app = Flask(__name__)
 CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # browser_opened = False
 
@@ -50,10 +51,16 @@ top_10=[]
 @app.route('/process_user_input', methods=['POST'])
 def process_user_input():
     global top_10
+    print("Request Data: ", request.json) 
     is_existing_user = request.json['isExistingUser']
     userID = request.json['userID']
     query = request.json['query']
     pageNo = request.json['pageNo']
+
+    print("isExistingUser:", is_existing_user)
+    print("userID:", userID)
+    print("query:", query)
+    print("pageNo:", pageNo)
 
     if userID == "":
         userID = 1
@@ -63,6 +70,8 @@ def process_user_input():
         pageNo = 1
     else:
         pageNo = int(pageNo)
+
+    
     correctedQuery = correct_spelling(query)
 
     did_you_mean = ""
@@ -99,7 +108,7 @@ def process_feedback_input():
 
     return jsonify(success=True, message="<h2>Feedback processed successfully")
 
-CORS(app, resources={r"/*": {"origins": "*"}})
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
