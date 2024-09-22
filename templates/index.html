@@ -427,7 +427,7 @@
         console.log(userInput1);
 
         axios
-          .post("http://127.0.0.1:5000/process_user_input", userInput1)
+          .post("recommendationsystem.railway.internal/process_user_input", userInput1)
           .then(function(response) {
             console.log(response.data);
             document.getElementById("result-container").innerHTML =
@@ -454,7 +454,7 @@
       console.log(userFeedback);
 
       axios
-        .post("http://127.0.0.1:5000/process_feedback_input", userFeedback, {
+        .post("recommendationsystem.railway.internal/process_feedback_input", userFeedback, {
           timeout: 20000,
         })
         .then(function(response) {
