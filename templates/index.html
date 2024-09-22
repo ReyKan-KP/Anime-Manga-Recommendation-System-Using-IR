@@ -6,7 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Anime/Manga Recommendation System</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-  <style>
+<style>
+    :root {
+      --primary-gradient: linear-gradient(to bottom right, #e0f2fe, #bfdbfe);
+      --secondary-gradient: linear-gradient(to bottom right, #e9d5ff, #d8b4fe);
+      --accent-gradient: linear-gradient(to bottom right, #fef3c7, #fde68a);
+      --success-gradient: linear-gradient(to bottom right, #b1f1d0, #cffae6);
+    }
+
+    * {
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
     .hidden {
       display: none;
     }
@@ -14,98 +25,138 @@
     #loadingIcon {
       display: none;
     }
-
     body {
-      font-family: "Arial", sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: var(--primary-gradient);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
+      padding: 2rem;
+      color: #333;
+      margin: 0;
     }
 
     .container {
       max-width: 30rem;
-      margin: 2rem;
-      padding: 2rem;
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 10px;
-      text-align: center;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      max-width: 100%;
-      align-items: center;
-    }
-
-    label {
-      margin-bottom: 0.5rem;
-      margin-top: 0.5rem;
-      font-weight: bold;
-    }
-
-    input,
-    option,
-    select {
-      padding: 0.5rem;
-      margin-bottom: 1rem;
-      margin-top: 1rem;
       width: 100%;
-      box-sizing: border-box;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+      text-align: center;
+      animation: fadeIn 0.5s ease-out;
     }
 
-    button {
-      padding: 1rem;
-      background-color: #0066ff;
-      color: #333;
-      border: none;
-      cursor: pointer;
-      width: 20vw;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-      width: auto;
-    }
-
-    button:hover {
-      background-color: rgba(23, 45, 141, 0.521);
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     h1 {
       color: #3984e6;
       text-align: center;
       margin-bottom: 2rem;
+      font-size: 2.5rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    label {
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input,
+    select {
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      background-color: #f8fafc;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+    }
+
+    button {
+      padding: 0.75rem 1.5rem;
+      background: var(--secondary-gradient);
+      color: #333;
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    .hidden {
+      display: none;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .visible {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
     }
 
     #result-container {
-      margin-top: 1.25rem;
-      max-width: 100%;
+      margin-top: 2rem;
+      width: 100%;
       overflow-x: auto;
+      background: var(--success-gradient);
+      padding: 1rem;
+      border-radius: 10px;
     }
 
     table {
       width: 100%;
-      border-collapse: collapse;
-      margin-top: 1.25rem;
-      height: 60vh;
-      overflow-x: auto;
-      overflow-y: auto;
+      border-collapse: separate;
+      border-spacing: 0 0.5rem;
     }
 
-    th,
-    td {
-      border: 1px solid #ddd;
-      padding: 0.5rem;
+    th, td {
+      padding: 1rem;
       text-align: left;
+      background-color: rgba(255, 255, 255, 0.8);
     }
 
     th {
-      background-color: #f2f2f2;
+      font-weight: bold;
+      background-color: rgba(59, 130, 246, 0.1);
+    }
+
+    tr:hover td {
+      background-color: rgba(255, 255, 255, 1);
     }
 
     .loader {
@@ -164,8 +215,7 @@
       right: -8px;
       box-shadow: 0 0 20px 5px #0066ff;
     }
-
-    @keyframes animateC {
+@keyframes animateC {
       0% {
         transform: rotate(0deg);
       }
@@ -185,12 +235,24 @@
       }
     }
 
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
     sup {
       font-size: 0.8em;
       vertical-align: super;
       color: #999;
     }
 
+    #feedbackInfo {
+      background: var(--success-gradient);
+      color: #333;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
     .green {
       color: green;
     }
@@ -199,6 +261,7 @@
       color: red;
     }
   </style>
+
 </head>
 
 <body>
@@ -364,7 +427,7 @@
         console.log(userInput1);
 
         axios
-          .post("https://recommendationsystem-production.up.railway.app/process_user_input", userInput1)
+          .post("http://127.0.0.1:5000/process_user_input", userInput1)
           .then(function(response) {
             console.log(response.data);
             document.getElementById("result-container").innerHTML =
