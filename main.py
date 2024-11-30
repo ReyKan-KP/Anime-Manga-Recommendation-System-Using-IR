@@ -43,6 +43,10 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 def index():
     return render_template('index.html')
 
+@app.route('/pr_curve.html')
+def pr_curve():
+    return render_template('pr_curve.html')
+
 top_10=[]
 
 @app.route('/process_user_input', methods=['POST'])
