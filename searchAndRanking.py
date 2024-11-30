@@ -83,7 +83,7 @@ def searchQuery(query):
 
 def searchAndRank(query, userID, pageNo, rec):
     if rec == "getRecommendations":
-        query=""
+        query=''
         csv_file_path = 'main dataset//user_profiles.csv'
         read = extract_watch_or_read(userID, csv_file_path)
         start_time = time.time()
