@@ -462,7 +462,7 @@
     showLoadingIcon();
 
     axios
-      .post("https://anime-rec-ir-production.up.railway.app/process_user_input", userInput1)  // Removed extra space
+      .post("https://anime-manga-recommendation-system-using.onrender.com/process_user_input", userInput1)  // Removed extra space
       .then(function(response) {
         console.log(response.data);
         document.getElementById("result-container").innerHTML = response.data;  // Check the structure of the data being returned
@@ -492,7 +492,7 @@
       console.log(userFeedback);
 
       axios
-        .post("https://anime-rec-ir-production.up.railway.app/process_feedback_input", userFeedback, {
+        .post("https://anime-manga-recommendation-system-using.onrender.com/process_feedback_input", userFeedback, {
           timeout: 20000,
         })
         .then(function(response) {
