@@ -61,7 +61,7 @@ def process_user_input():
     print("query:", query)
     print("pageNo:", pageNo)
     print("recomendation:", rec)
-    if query=='$$':
+    if query=="$$":
         query=''
     if userID == "":
         userID = 1
@@ -72,8 +72,8 @@ def process_user_input():
     else:
         pageNo = int(pageNo)
 
-    
     correctedQuery = correct_spelling(query)
+    print("query2:", correctedQuery)
 
     did_you_mean = ""
     if correctedQuery != query:
