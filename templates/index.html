@@ -1,589 +1,653 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Anime and Manga - Recommendation System</title>
-    <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Space+Grotesk:wght@300;400;600&display=swap');
 
-        :root {
-            --primary: #4f46e5;
-            --primary-light: #818cf8;
-            --secondary: #f43f5e;
-            --accent: #06b6d4;
-            --background: #f8fafc;
-            --surface: #ffffff;
-            --text: #1e293b;
-            --text-muted: #64748b;
-        }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Anime and Manga - Recommendation System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" href="icon.ico">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Space+Grotesk:wght@300;400;600&display=swap');
 
-        .dark-mode {
-            --primary: #818cf8;
-            --primary-light: #a5b4fc;
-            --secondary: #fb7185;
-            --accent: #22d3ee;
-            --background: #0f172a;
-            --surface: #1e293b;
-            --text: #f1f5f9;
-            --text-muted: #94a3b8;
-        }
+    :root {
+      --primary: #4f46e5;
+      --primary-light: #818cf8;
+      --secondary: #f43f5e;
+      --accent: #06b6d4;
+      --background: #f8fafc;
+      --surface: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    .dark-mode {
+      --primary: #818cf8;
+      --primary-light: #a5b4fc;
+      --secondary: #fb7185;
+      --accent: #22d3ee;
+      --background: #0f172a;
+      --surface: #1e293b;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
 
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-            background-color: var(--background);
-            color: var(--text);
-            line-height: 1.6;
-            min-height: 100vh;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        .background-animations {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-            pointer-events: none;
-        }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
 
-        .floating-circle {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.2;
-            filter: blur(60px);
-            animation: floatAnimation 20s infinite linear;
-        }
+    .background-animations {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
 
-        .circle-1 {
-            width: 300px;
-            height: 300px;
-            background: var(--primary);
-            top: -150px;
-            left: -150px;
-            animation-delay: 0s;
-        }
+    .floating-circle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.2;
+      filter: blur(60px);
+      animation: floatAnimation 20s infinite linear;
+    }
 
-        .circle-2 {
-            width: 400px;
-            height: 400px;
-            background: var(--secondary);
-            bottom: -200px;
-            right: -200px;
-            animation-delay: -5s;
-        }
+    .circle-1 {
+      width: 300px;
+      height: 300px;
+      background: var(--primary);
+      top: -150px;
+      left: -150px;
+      animation-delay: 0s;
+    }
 
-        .circle-3 {
-            width: 250px;
-            height: 250px;
-            background: var(--accent);
-            top: 50%;
-            left: 50%;
-            animation-delay: -10s;
-        }
+    .circle-2 {
+      width: 400px;
+      height: 400px;
+      background: var(--secondary);
+      bottom: -200px;
+      right: -200px;
+      animation-delay: -5s;
+    }
 
-        @keyframes floatAnimation {
-            0% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-            33% {
-                transform: translate(100px, 100px) rotate(120deg);
-            }
-            66% {
-                transform: translate(-50px, 50px) rotate(240deg);
-            }
-            100% {
-                transform: translate(0, 0) rotate(360deg);
-            }
-        }
+    .circle-3 {
+      width: 250px;
+      height: 250px;
+      background: var(--accent);
+      top: 50%;
+      left: 50%;
+      animation-delay: -10s;
+    }
 
-        .container {
-            width: 80%;
-            max-width: 1400px;
-            margin: 2rem auto;
-            position: relative;
-            z-index: 1;
-        }
+    @keyframes floatAnimation {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+      }
 
-        .header {
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-        }
+      33% {
+        transform: translate(100px, 100px) rotate(120deg);
+      }
 
-        .title {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 3.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 1rem;
-            position: relative;
-            animation: glowPulse 2s infinite;
-        }
+      66% {
+        transform: translate(-50px, 50px) rotate(240deg);
+      }
 
-        @keyframes glowPulse {
-            0%, 100% {
-                text-shadow: 0 0 10px rgba(79, 70, 229, 0.5),
-                             0 0 20px rgba(79, 70, 229, 0.3);
-            }
-            50% {
-                text-shadow: 0 0 15px rgba(79, 70, 229, 0.7),
-                             0 0 25px rgba(79, 70, 229, 0.5);
-            }
-        }
+      100% {
+        transform: translate(0, 0) rotate(360deg);
+      }
+    }
 
-        .title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 150px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 3px;
-        }
+    .container {
+      width: 80%;
+      max-width: 1400px;
+      margin: 2rem auto;
+      position: relative;
+      z-index: 1;
+    }
 
-        .form-card {
-            background: var(--surface);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(8px);
-            transition: all 0.3s ease;
-        }
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
+    .title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 1rem;
+      position: relative;
+      animation: glowPulse 2s infinite;
+    }
 
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-muted);
-            font-weight: 600;
-        }
+    @keyframes glowPulse {
 
-        input, select {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 2px solid rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            background: var(--surface);
-            color: var(--text);
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
+      0%,
+      100% {
+        text-shadow: 0 0 10px rgba(79, 70, 229, 0.5),
+          0 0 20px rgba(79, 70, 229, 0.3);
+      }
 
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--primary-light);
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
-        }
+      50% {
+        text-shadow: 0 0 15px rgba(79, 70, 229, 0.7),
+          0 0 25px rgba(79, 70, 229, 0.5);
+      }
+    }
 
-        select {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            background-size: 1.2em;
-            padding-right: 2.5rem;
-            cursor: pointer;
-        }
+    .title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 3px;
+    }
 
-        button {
-            width: 100%;
-            padding: 1rem;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
+    .form-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+    }
 
-        button::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                45deg,
-                transparent,
-                rgba(255, 255, 255, 0.1),
-                transparent
-            );
-            transform: rotate(45deg);
-            animation: shine 3s infinite;
-        }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
 
-        @keyframes shine {
-            0% {
-                transform: translateX(-100%) rotate(45deg);
-            }
-            20%, 100% {
-                transform: translateX(100%) rotate(45deg);
-            }
-        }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
 
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-        }
+    input,
+    select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
 
-        .results-container {
-            background: var(--surface);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-top: 2rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(8px);
-            overflow-x: auto;
-            transition: all 0.3s ease;
-        }
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+    }
 
-        .results-title {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: var(--accent);
-            text-align: center;
-        }
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1.2em;
+      padding-right: 2.5rem;
+      cursor: pointer;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-        }
+    button {
+      width: 100%;
+      padding: 1rem;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
 
-        th {
-            background: rgba(79, 70, 229, 0.1);
-            color: var(--primary);
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 600;
-            text-align: left;
-            padding: 1rem;
-            border-bottom: 2px solid var(--primary);
-        }
+    button::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg,
+          transparent,
+          rgba(255, 255, 255, 0.1),
+          transparent);
+      transform: rotate(45deg);
+      animation: shine 3s infinite;
+    }
 
-        td {
-            padding: 1rem;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-            color: var(--text);
-        }
+    @keyframes shine {
+      0% {
+        transform: translateX(-100%) rotate(45deg);
+      }
 
-        tr:hover td {
-            background: rgba(79, 70, 229, 0.05);
-        }
+      20%,
+      100% {
+        transform: translateX(100%) rotate(45deg);
+      }
+    }
 
-        .loader {
-            display: none;
-            width: 48px;
-            height: 48px;
-            border: 3px solid var(--accent);
-            border-bottom-color: transparent;
-            border-radius: 50%;
-            margin: 2rem auto;
-            animation: rotation 1s linear infinite;
-        }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    }
 
-        @keyframes rotation {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+    .results-container {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-top: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      overflow-x: auto;
+      transition: all 0.3s ease;
+    }
 
-        .feedback-form {
-            margin-top: 2rem;
-            padding: 2rem;
-            background: rgba(79, 70, 229, 0.1);
-            border-radius: 20px;
-            border: 1px solid var(--primary);
-        }
+    .results-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+      text-align: center;
+    }
 
-        .feedback-title {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
 
-        .hidden {
-            display: none;
-        }
+    th {
+      background: rgba(79, 70, 229, 0.1);
+      color: var(--primary);
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      text-align: left;
+      padding: 1rem;
+      border-bottom: 2px solid var(--primary);
+    }
 
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--surface);
-            border: none;
-            color: var(--primary);
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
+    td {
+      padding: 1rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      color: var(--text);
+    }
 
-        .theme-toggle:hover {
-            transform: scale(1.1);
-            background: var(--primary);
-            color: var(--surface);
-        }
+    tr:hover td {
+      background: rgba(79, 70, 229, 0.05);
+    }
 
-        .theme-toggle i {
-            transition: all 0.3s ease;
-        }
+    .loader {
+      display: none;
+      width: 48px;
+      height: 48px;
+      border: 3px solid var(--accent);
+      border-bottom-color: transparent;
+      border-radius: 50%;
+      margin: 2rem auto;
+      animation: rotation 1s linear infinite;
+    }
 
-        @keyframes iconRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+    @keyframes rotation {
+      0% {
+        transform: rotate(0deg);
+      }
 
-        .theme-toggle i {
-            animation: iconRotate 0.5s ease;
-        }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
 
-        @media (max-width: 768px) {
-            .container {
-                width: 95%;
-                padding: 1rem;
-            }
+    .feedback-form {
+      margin-top: 2rem;
+      padding: 2rem;
+      background: rgba(79, 70, 229, 0.1);
+      border-radius: 20px;
+      border: 1px solid var(--primary);
+    }
 
-            .title {
-                font-size: 2.5rem;
-            }
+    .feedback-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
 
-            .form-card, .results-container {
-                padding: 1rem;
-            }
-        }
-        .green {
+    .hidden {
+      display: none;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--surface);
+      border: none;
+      color: var(--primary);
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+      background: var(--primary);
+      color: var(--surface);
+    }
+
+    .theme-toggle i {
+      transition: all 0.3s ease;
+    }
+
+    @keyframes iconRotate {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .theme-toggle i {
+      animation: iconRotate 0.5s ease;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        width: 95%;
+        padding: 1rem;
+      }
+
+      .title {
+        font-size: 2.5rem;
+      }
+
+      .form-card,
+      .results-container {
+        padding: 1rem;
+      }
+    }
+
+    .green {
       color: green;
     }
 
     .red {
       color: red;
     }
-    </style>
-  </head>
-  <body>
-    <button class="theme-toggle" onclick="toggleTheme()"
-      aria-label="Toggle theme">
-      <i class="fas fa-moon"></i>
-    </button>
 
-    <div class="background-animations">
-      <div class="floating-circle circle-1"></div>
-      <div class="floating-circle circle-2"></div>
-      <div class="floating-circle circle-3"></div>
-    </div>
+    .reset-icon {
+      position: absolute;
+      top: 2.5rem;
+      right: 4rem;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
 
-    <div class="container">
-      <header class="header">
-        <h1 class="title"> Anime and Manga Recommendation System</h1>
-        <p>Discover your next favorite anime and manga through advanced
-          recommendations through IR techniques</p>
-      </header>
+    .reset-icon:hover {
+      color: var(--secondary);
+    }
 
-      <div class="form-card">
-        <form id="userInputForm">
-          <div class="form-group">
-            <label for="askUserSelect">Are you an existing User?</label>
-            <select id="askUserSelect" name="askUser">
-              <option value>Select</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
-          </div>
+    .reset-icon i {
+      pointer-events: none;
+      /* Ensures only the button itself triggers the action */
+    }
+  </style>
+</head>
 
-          <div id="UserId" class="form-group hidden">
-            <label for="userID">Enter User ID</label>
-            <input type="text" id="userID" name="userID"
-              placeholder="Enter your user ID">
-          </div>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+    <i class="fas fa-moon"></i>
+  </button>
 
-          <div id="descRecommendDropDown" class="form-group hidden">
-            <label for="descRecommendDropDownSelect">Choose an option</label>
-            <select id="descRecommendDropDownSelect"
-              name="descRecommendDropDown">
-              <option value>Select</option>
-              <option value="enterDescription">Enter Description</option>
-              <option value="getRecommendations">Get Recommendations</option>
-            </select>
-          </div>
+  <div class="background-animations">
+    <div class="floating-circle circle-1"></div>
+    <div class="floating-circle circle-2"></div>
+    <div class="floating-circle circle-3"></div>
+  </div>
 
-          <div id="desc" class="form-group hidden">
-            <label for="description">Anime/Manga Description</label>
-            <input type="text" id="description" name="description"
-              placeholder="Enter description...">
-          </div>
+  <div class="container">
+    <header class="header">
+      <h1 class="title"> Anime and Manga Recommendation System</h1>
+      <p>Discover your next favorite anime and manga through advanced
+        recommendations through IR techniques</p>
+    </header>
 
-          <div id="pageNoInput" class="form-group">
-            <label for="pageNo">Page Number</label>
-            <input type="number" id="pageNo" name="pageNo" value="1" min="1">
-          </div>
-
-          <button type="submit" id="submitBtn">
-            <i class="fas fa-search"></i> Find Recommendations
-          </button>
-        </form>
-      </div>
-
-      <div class="loader" id="loadingIcon"></div>
-
-      <div id="result-container" class="results-container hidden">
-        <h2 class="results-title">Recommendations</h2>
-        <!-- Results will be inserted here -->
-      </div>
-
-      <form id="feedbackForm" class="feedback-form hidden">
-        <h3 class="feedback-title">Provide Feedback</h3>
+    <div class="form-card">
+      <form id="userInputForm">
+        <h2><center>Recommendation Form</center></h2>
+        <span type="reset" class="reset-icon" aria-label="Reset form" onclick="resetForm()">
+          <i class="fas fa-redo-alt"></i>
+        </span>
         <div class="form-group">
-          <label for="feedback">Relevant Document IDs (comma-separated)</label>
-          <input type="text" id="feedback" name="feedback"
-            placeholder="e.g., 1, 2, 3">
+          <label for="askUserSelect">Are you an existing User?</label>
+          <select id="askUserSelect" name="askUser">
+            <option value>Select</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
         </div>
-        <button type="submit" id="submitFeed">Submit Feedback</button>
+
+        <div id="UserId" class="form-group hidden">
+          <label for="userID">Enter User ID  <br />
+            <sup>Please Don't Press Enter just leave the input area
+          </sup>
+          </label>
+          <input type="text" id="userID" name="userID" placeholder="Enter your user ID">
+        </div>
+
+        <div id="descRecommendDropDown" class="form-group hidden">
+          <label for="descRecommendDropDownSelect">Choose an option</label>
+          <select id="descRecommendDropDownSelect" name="descRecommendDropDown">
+            <option value>Select</option>
+            <option value="enterDescription">Enter Description of the Anime/Manga</option>
+            <option value="getRecommendations"> Get recommendations based on the previous User's watched list</option>
+          </select>
+        </div>
+
+        <div id="desc" class="form-group hidden">
+          <label for="description">Anime/Manga Description  <br />
+            <sup>Please Don't Press Enter just leave the input area
+          </sup>
+          </label>
+          <input type="text" id="description" name="description" placeholder="Enter description...">
+        </div>
+
+        <div id="pageNoInput" class="form-group">
+          <label for="pageNo">Page Number   <br />
+            <sup>if pageNo = x then ranking will be from 10x-9 to 10x</sup>
+          </label>
+          
+          <input type="number" id="pageNo" name="pageNo" value="1" min="1">
+        </div>
+
+        <button type="submit" id="submitBtn">
+          <i class="fas fa-search"></i> Find Recommendations
+        </button>
       </form>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            const themeIcon = document.querySelector('.theme-toggle i');
-            
-            // Add animation by removing and re-adding the icon
-            themeIcon.style.animation = 'none';
-            themeIcon.offsetHeight; // Trigger reflow
-            themeIcon.style.animation = null;
-            
-            if (document.body.classList.contains('dark-mode')) {
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-            } else {
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
-            }
-        }
+    <div class="loader" id="loadingIcon"></div>
 
-        function showElement(elementId) {
-            document.getElementById(elementId).classList.remove("hidden");
-        }
+    <div id="result-container" class="results-container hidden">
+      <h2 class="results-title">Recommendations</h2>
+      <!-- Results will be inserted here -->
+    </div>
 
-        function hideElement(elementId) {
-            document.getElementById(elementId).classList.add("hidden");
-        }
+    <form id="feedbackForm" class="feedback-form hidden">
+      <h3 class="feedback-title">Provide Feedback</h3>
+      <div class="form-group">
+        <label for="feedback">Relevant Document IDs (comma-separated)</label>
+        <input type="text" id="feedback" name="feedback" placeholder="e.g., 1, 2, 3">
+      </div>
+      <button type="submit" id="submitFeed">Submit Feedback</button>
 
-        document.getElementById("askUserSelect").addEventListener("change", function() {
-            hideElement("UserId");
-            hideElement("descRecommendDropDown");
-            hideElement("desc");
+    </form>
+  </div>
+  <script>
+    function resetForm() {
+      // Get the form element
+      const form = document.getElementById('userInputForm');
+      // Reset all form fields
+      form.reset();
 
-            if (this.value === "yes") {
-                showElement("UserId");
-            } else if (this.value === "no") {
-                showElement("desc");
-            }
+      // Hide optional fields if they are visible
+      document.getElementById('UserId').classList.add('hidden');
+      document.getElementById('descRecommendDropDown').classList.add('hidden');
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+      const themeIcon = document.querySelector('.theme-toggle i');
+
+      // Add animation by removing and re-adding the icon
+      themeIcon.style.animation = 'none';
+      themeIcon.offsetHeight; // Trigger reflow
+      themeIcon.style.animation = null;
+
+      if (document.body.classList.contains('dark-mode')) {
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+      } else {
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+      }
+    }
+
+    function showElement(elementId) {
+      document.getElementById(elementId).classList.remove("hidden");
+    }
+
+    function hideElement(elementId) {
+      document.getElementById(elementId).classList.add("hidden");
+    }
+
+    document.getElementById("askUserSelect").addEventListener("change", function() {
+      hideElement("UserId");
+      hideElement("descRecommendDropDown");
+      hideElement("desc");
+
+      if (this.value === "yes") {
+        showElement("UserId");
+      } else if (this.value === "no") {
+        showElement("desc");
+      }
+    });
+
+    document.getElementById("userID").addEventListener("blur", function() {
+      showElement("descRecommendDropDown");
+    });
+
+    document.getElementById("descRecommendDropDownSelect").addEventListener("change", function() {
+      hideElement("desc");
+
+      if (this.value === "enterDescription") {
+        showElement("desc");
+      }
+    });
+
+    document.getElementById("userInputForm").addEventListener("submit", async function(event) {
+      event.preventDefault();
+      const submitBtn = document.getElementById("submitBtn");
+      const loadingIcon = document.getElementById("loadingIcon");
+      const resultContainer = document.getElementById("result-container");
+
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Finding...';
+      submitBtn.disabled = true;
+      showElement("loadingIcon");
+      hideElement("result-container");
+
+      const query = document.getElementById("description").value;
+      const userInput = {
+        isExistingUser: document.getElementById("askUserSelect").value,
+        userID: document.getElementById("userID").value,
+        query: query || '$$',
+        pageNo: document.getElementById("pageNo").value,
+        descRecommendDropDown: document.getElementById("descRecommendDropDownSelect").value
+      };
+
+      try {
+        const response = await axios.post("https://anime-manga-recommendation-system-using.onrender.com/process_user_input", userInput);
+        resultContainer.innerHTML = response.data;
+        showElement("result-container");
+        showElement("feedbackForm");
+      } catch (error) {
+        console.error("Error:", error);
+        resultContainer.innerHTML = "<p>An error occurred while fetching recommendations. Please try again.</p>";
+        showElement("result-container");
+      } finally {
+        hideElement("loadingIcon");
+        submitBtn.innerHTML = '<i class="fas fa-search"></i> Find Recommendations';
+        submitBtn.disabled = false;
+      }
+    });
+
+    document.getElementById("feedbackForm").addEventListener("submit", async function(event) {
+      event.preventDefault();
+      const submitFeed = document.getElementById("submitFeed");
+      const userFeedback = {
+        feedbackIDs: document.getElementById("feedback").value.split(",").map(id => id.trim()),
+      };
+
+      try {
+        submitFeed.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+        const response = await axios.post("https://anime-manga-recommendation-system-using.onrender.com/process_feedback_input", userFeedback, {
+          timeout: 10000,
         });
+        submitFeed.innerHTML = 'Submitted';
+      } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred while submitting feedback. Please try again.");
+      }
+    });
+  </script>
+</body>
 
-        document.getElementById("userID").addEventListener("blur", function() {
-            showElement("descRecommendDropDown");
-        });
-
-        document.getElementById("descRecommendDropDownSelect").addEventListener("change", function() {
-            hideElement("desc");
-
-            if (this.value === "enterDescription") {
-                showElement("desc");
-            }
-        });
-
-        document.getElementById("userInputForm").addEventListener("submit", async function(event) {
-            event.preventDefault();
-            const submitBtn = document.getElementById("submitBtn");
-            const loadingIcon = document.getElementById("loadingIcon");
-            const resultContainer = document.getElementById("result-container");
-
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Finding...';
-            submitBtn.disabled = true;
-            showElement("loadingIcon");
-            hideElement("result-container");
-
-            const query = document.getElementById("description").value;
-            const userInput = {
-                isExistingUser: document.getElementById("askUserSelect").value,
-                userID: document.getElementById("userID").value,
-                query: query || '$$',
-                pageNo: document.getElementById("pageNo").value,
-                descRecommendDropDown: document.getElementById("descRecommendDropDownSelect").value
-            };
-
-            try {
-                const response = await axios.post("https://anime-manga-recommendation-system-using.onrender.com/process_user_input", userInput);
-                resultContainer.innerHTML = response.data;
-                showElement("result-container");
-                showElement("feedbackForm");
-            } catch (error) {
-                console.error("Error:", error);
-                resultContainer.innerHTML = "<p>An error occurred while fetching recommendations. Please try again.</p>";
-                showElement("result-container");
-            } finally {
-                hideElement("loadingIcon");
-                submitBtn.innerHTML = '<i class="fas fa-search"></i> Find Recommendations';
-                submitBtn.disabled = false;
-            }
-        });
-
-        document.getElementById("feedbackForm").addEventListener("submit", async function(event) {
-            event.preventDefault();
-            const submitFeed = document.getElementById("submitFeed");
-            const userFeedback = {
-                feedbackIDs: document.getElementById("feedback").value.split(",").map(id => id.trim()),
-            };
-
-            try {
-              submitFeed.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-                const response = await axios.post("https://anime-manga-recommendation-system-using.onrender.com/process_feedback_input", userFeedback, {
-                    timeout: 10000,
-                });
-                submitFeed.innerHTML = 'Submitted';
-            } catch (error) {
-                console.error("Error:", error);
-                alert("An error occurred while submitting feedback. Please try again.");
-            }
-        });
-    </script>
-  </body>
 </html>
