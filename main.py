@@ -99,15 +99,23 @@ def process_user_input():
 
 @app.route('/process_feedback_input', methods=['POST'])
 def process_feedback_input():
+    try:
+        feedback_ids = request.json.get('feedbackIDs', [])
+        if not feedback_ids:
+            return jsonify(success=False, message="No feedback IDs provided.")
 
-    feedback_ids = request.json.get('feedbackIDs', [])
+        feedback_ids = [int(fid) for fid in feedback_ids]
 
-    feedback_ids = [int(fid) for fid in feedback_ids]
+        # Generate the PR curve
+        pr_curve_result = PRcurve(total_doc, feedback_ids, top_10)
+        if not pr_curve_result["success"]:
+            return jsonify(success=False, message=pr_curve_result["message"])
 
-    feedback(feedback_ids)
-    PRcurve(total_doc,feedback_ids,top_10)
+        return jsonify(success=True, message="Feedback processed successfully. PR Curve generated.")
 
-    return jsonify(success=True, message="<h2>Feedback processed successfully")
+    except Exception as e:
+        print(f"Error processing feedback: {e}")
+        return jsonify(success=False, message="Internal server error.")
 
 
 

@@ -460,7 +460,9 @@
 
     <div class="form-card">
       <form id="userInputForm">
-        <h2><center>Recommendation Form</center></h2>
+        <h2>
+          <center>Recommendation Form</center>
+        </h2>
         <span type="reset" class="reset-icon" aria-label="Reset form" onclick="resetForm()">
           <i class="fas fa-redo-alt"></i>
         </span>
@@ -474,9 +476,9 @@
         </div>
 
         <div id="UserId" class="form-group hidden">
-          <label for="userID">Enter User ID  <br />
+          <label for="userID">Enter User ID <br />
             <sup>Please Don't Press Enter just leave the input area
-          </sup>
+            </sup>
           </label>
           <input type="text" id="userID" name="userID" placeholder="Enter your user ID">
         </div>
@@ -491,18 +493,18 @@
         </div>
 
         <div id="desc" class="form-group hidden">
-          <label for="description">Anime/Manga Description  <br />
+          <label for="description">Anime/Manga Description <br />
             <sup>Please Don't Press Enter just leave the input area
-          </sup>
+            </sup>
           </label>
           <input type="text" id="description" name="description" placeholder="Enter description...">
         </div>
 
         <div id="pageNoInput" class="form-group">
-          <label for="pageNo">Page Number   <br />
+          <label for="pageNo">Page Number <br />
             <sup>if pageNo = x then ranking will be from 10x-9 to 10x</sup>
           </label>
-          
+
           <input type="number" id="pageNo" name="pageNo" value="1" min="1">
         </div>
 
@@ -641,7 +643,9 @@
         const response = await axios.post("https://anime-manga-recommendation-system-using.onrender.com/process_feedback_input", userFeedback, {
           timeout: 10000,
         });
-        submitFeed.innerHTML = 'Submitted';
+        if (response.data.success) {
+          window.location.href = "pr_curve.html"; // Redirect to the PR curve HTML
+        }
       } catch (error) {
         console.error("Error:", error);
         alert("An error occurred while submitting feedback. Please try again.");
